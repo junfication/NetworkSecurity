@@ -9,29 +9,30 @@ int callback(void* data, int argc, char** argv, char** azColName)
   std::string user = argv[0];
   std::string pass = argv[1];
 
-  unsigned char userHash[32];
-  unsigned char passHash[32];
-
-  char* tmp = const_cast<char*>(user.c_str());
-  unsigned char* uc = reinterpret_cast<unsigned char*>(tmp);
-  SHA256(uc, user.size(), userHash);
-  tmp = const_cast<char*>(pass.c_str());
-  uc = reinterpret_cast<unsigned char*>(tmp);
-  SHA256(uc, pass.size(), passHash);
 
   std::string username;
   std::string password;
 
-  for (int i = 0; i < 32; ++i)
+  char* userChar = argv[0];
+  char* passChar = argv[1];
+
+  char* tok;
+  tok = std::strtok(userChar, ",");
+  while (tok != NULL)
   {
-    username.push_back(userHash[i]);
+    int val = std::stoi(tok);
+    username.push_back((unsigned char)val);
+    tok = strtok(NULL, ",");
   }
 
-  for (int i = 0; i < 32; ++i)
+  char* tok2;
+  tok2 = std::strtok(passChar, ",");
+  while (tok2 != NULL)
   {
-    password.push_back(passHash[i]);
+    int val = std::stoi(tok2);
+    password.push_back((unsigned char)val);
+    tok2 = strtok(NULL, ",");
   }
-
 
   map->operator[](username) = password;
 
@@ -81,9 +82,34 @@ void Database::Print()
 void Database::Add(std::string username, std::string password)
 {
   std::string stmt = "INSERT INTO users VALUES ('";
-  stmt += username;
+
+  unsigned char userHash[32];
+  unsigned char passHash[32];
+
+  char* tmp = const_cast<char*>(username.c_str());
+  unsigned char* uc = reinterpret_cast<unsigned char*>(tmp);
+  SHA256(uc, username.size(), userHash);
+  tmp = const_cast<char*>(password.c_str());
+  uc = reinterpret_cast<unsigned char*>(tmp);
+  SHA256(uc, password.size(), passHash);
+
+  std::string hashUser;
+  for (int i = 0; i < 32; ++i)
+  {
+    hashUser += std::to_string((int)userHash[i]);
+    hashUser += ",";
+  }
+
+  std::string hashPass;
+  for (int i = 0; i < 32; ++i)
+  {
+    hashPass += std::to_string((int)passHash[i]);
+    hashPass += ",";
+  }
+
+  stmt += hashUser;
   stmt += "', '";
-  stmt += password;
+  stmt += hashPass;
   stmt += "')";
   if (DB) 
   {

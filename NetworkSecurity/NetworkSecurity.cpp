@@ -4,7 +4,7 @@
 #include <map>
 #include "TLSServer.h"
 #include "TLSClient.h"
-// #define SERVER_IS_ON 1
+//#define SERVER_IS_ON 1
 #define LENGTH 2048
 #include <openssl/sha.h>
 #include <openssl/rsa.h>
@@ -185,7 +185,7 @@ int main()
   char buf[LENGTH];
   ZeroMemory(buf, LENGTH);
 
-  while(true)
+  while (true)
   {
     ZeroMemory(buf, LENGTH);
     if (SSL_read(ssl, buf, LENGTH) > 0)
@@ -288,7 +288,7 @@ int main()
             for (int i = 129; i < sz; ++i)
             {
               *tmp = decrypted[i];
-              if(i < 132)
+              if (i < 132)
                 ++tmp;
             }
             sess.PortNum = port;
