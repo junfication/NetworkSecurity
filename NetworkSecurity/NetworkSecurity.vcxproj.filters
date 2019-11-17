@@ -36,6 +36,12 @@
     <ClCompile Include="openssl\applink.c">
       <Filter>openssl</Filter>
     </ClCompile>
+    <ClCompile Include="TLSServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TLSClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sqlite\sqlite3.h">
@@ -358,6 +364,12 @@
     </ClInclude>
     <ClInclude Include="openssl\x509v3err.h">
       <Filter>openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="TLSServer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TLSClient.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

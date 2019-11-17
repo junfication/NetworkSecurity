@@ -1,1 +1,0 @@
-https://wiki.openssl.org/index.php/Simple_TLS_Server
