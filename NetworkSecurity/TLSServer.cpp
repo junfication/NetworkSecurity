@@ -168,6 +168,48 @@ std::string TLSServer::GenerateSessionKey()
   return session;
 }
 
+std::string TLSServer::GenerateNonces()
+{
+  std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
+  std::uniform_int_distribution<int>dis(0, 255);
+  std::string nonceString;
+  unsigned char salt[] = "0";
+  salt[0] = (unsigned char)dis(rng);
+  unsigned char nonces[SHA256_DIGEST_LENGTH];
+
+  SHA256_CTX sha256;
+  SHA256_Init(&sha256);
+  SHA256_Update(&sha256, salt, 1);
+  SHA256_Final(nonces, &sha256);
+
+  for (unsigned i = 0; i < SHA256_DIGEST_LENGTH; ++i)
+    nonceString.push_back(nonces[i]);
+
+  return nonceString;
+}
+
+void TLSServer::PrintHostNameAndIP()
+{
+  char hostbuffer[256];
+  char* IPbuffer;
+  struct hostent* host_entry;
+  int hostname;
+
+  // To retrieve hostname 
+  hostname = gethostname(hostbuffer, sizeof(hostbuffer));
+
+  // To retrieve host information 
+  host_entry = gethostbyname(hostbuffer);
+
+  // To convert an Internet network 
+  // address into ASCII string 
+  IPbuffer = inet_ntoa(*((struct in_addr*)
+    host_entry->h_addr_list[0]));
+
+  printf("Hostname: %s\n", hostbuffer);
+  printf("Host IP: %s\n", IPbuffer);
+}
+
 void TLSServer::Session::InitSocket()
 {
   if ((s = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)

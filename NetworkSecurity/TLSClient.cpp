@@ -127,7 +127,7 @@ void TLSClient::CSession::InitSocket()
   ZeroMemory(&server, sizeof(server));
   server.sin_family = AF_INET;
   server.sin_port = htons((unsigned short)PortNum);
-  server.sin_addr.S_un.S_addr = inet_addr("192.168.1.83");
+  server.sin_addr.S_un.S_addr = inet_addr(ipString.c_str());
 }
 
 void TLSClient::CSession::Send()

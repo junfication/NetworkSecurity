@@ -118,7 +118,10 @@ void Database::Add(std::string username, std::string password)
     if (rc != SQLITE_OK)
       std::cout << "Error adding username and password!" << std::endl;
     else
+    {
       std::cout << "Added username and password" << std::endl;
+      Load();
+    }
   }
   else
     std::cout << "Database not Opened!" << std::endl;
@@ -127,7 +130,21 @@ void Database::Add(std::string username, std::string password)
 void Database::Delete(std::string username)
 {
   std::string stmt = "DELETE from users WHERE Username = '";
-  stmt += username;
+  
+  unsigned char userHash[32];
+
+  char* tmp = const_cast<char*>(username.c_str());
+  unsigned char* uc = reinterpret_cast<unsigned char*>(tmp);
+  SHA256(uc, username.size(), userHash);
+
+  std::string hashUser;
+  for (int i = 0; i < 32; ++i)
+  {
+    hashUser += std::to_string((int)userHash[i]);
+    hashUser += ",";
+  }
+
+  stmt += hashUser;
   stmt += "'";
   if (DB)
   {
@@ -136,7 +153,10 @@ void Database::Delete(std::string username)
     if (rc != SQLITE_OK)
       std::cout << "Error deleting username and password!" << std::endl;
     else
+    {
       std::cout << "Deleted username and password" << std::endl;
+      Load();
+    }
   }
   else
     std::cout << "Database not Opened!" << std::endl;

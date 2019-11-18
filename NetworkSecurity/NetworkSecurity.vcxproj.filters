@@ -42,6 +42,9 @@
     <ClCompile Include="TLSClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Connection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sqlite\sqlite3.h">
@@ -369,6 +372,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="TLSClient.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Connection.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

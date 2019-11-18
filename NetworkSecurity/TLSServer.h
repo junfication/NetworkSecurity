@@ -26,6 +26,8 @@ namespace TLSServer
   void configContext(SSL_CTX* ctx);
   RSA* createRSA();
   std::string GenerateSessionKey();
+  std::string GenerateNonces();
+  void PrintHostNameAndIP();
 
   struct Session
   {

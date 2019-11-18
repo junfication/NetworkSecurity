@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Connection.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="NetworkSecurity.cpp" />
     <ClCompile Include="openssl\applink.c" />
@@ -180,6 +181,7 @@
     <ClCompile Include="TLSServer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Connection.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="openssl\aes.h" />
     <ClInclude Include="openssl\asn1.h" />

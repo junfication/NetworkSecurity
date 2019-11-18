@@ -36,7 +36,7 @@ namespace TLSClient
     unsigned short PortNum;
     unsigned char snonce[16];
     unsigned char cnonce[16];
-    std::string fn;
+    std::string ipString;
     std::string data;
     bool b = false;
     int auth = 0;
